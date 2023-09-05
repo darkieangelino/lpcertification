@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - LP Brand Store</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <!-- BEGIN LivePerson Monitor. -->
+    <script type="text/javascript">window.lpTag=window.lpTag||{},'undefined'==typeof window.lpTag._tagCount?(window.lpTag={wl:lpTag.wl||null,scp:lpTag.scp||null,site:'84851429'||'',section:lpTag.section||'',tagletSection:lpTag.tagletSection||null,autoStart:lpTag.autoStart!==!1,ovr:lpTag.ovr||{},_v:'1.10.0',_tagCount:1,protocol:'https:',events:{bind:function(t,e,i){lpTag.defer(function(){lpTag.events.bind(t,e,i)},0)},trigger:function(t,e,i){lpTag.defer(function(){lpTag.events.trigger(t,e,i)},1)}},defer:function(t,e){0===e?(this._defB=this._defB||[],this._defB.push(t)):1===e?(this._defT=this._defT||[],this._defT.push(t)):(this._defL=this._defL||[],this._defL.push(t))},load:function(t,e,i){var n=this;setTimeout(function(){n._load(t,e,i)},0)},_load:function(t,e,i){var n=t;t||(n=this.protocol+'//'+(this.ovr&&this.ovr.domain?this.ovr.domain:'lptag.liveperson.net')+'/tag/tag.js?site='+this.site);var o=document.createElement('script');o.setAttribute('charset',e?e:'UTF-8'),i&&o.setAttribute('id',i),o.setAttribute('src',n),document.getElementsByTagName('head').item(0).appendChild(o)},init:function(){this._timing=this._timing||{},this._timing.start=(new Date).getTime();var t=this;window.attachEvent?window.attachEvent('onload',function(){t._domReady('domReady')}):(window.addEventListener('DOMContentLoaded',function(){t._domReady('contReady')},!1),window.addEventListener('load',function(){t._domReady('domReady')},!1)),'undefined'===typeof window._lptStop&&this.load()},start:function(){this.autoStart=!0},_domReady:function(t){this.isDom||(this.isDom=!0,this.events.trigger('LPT','DOM_READY',{t:t})),this._timing[t]=(new Date).getTime()},vars:lpTag.vars||[],dbs:lpTag.dbs||[],ctn:lpTag.ctn||[],sdes:lpTag.sdes||[],hooks:lpTag.hooks||[],identities:lpTag.identities||[],ev:lpTag.ev||[]},lpTag.init()):window.lpTag._tagCount+=1;</script>
+    <!-- END LivePerson Monitor. -->
+</head>
+<body>
+    <header>
+        <div class="brand-name">LP Brand Store</div>
+        <div class="menu-links">
+            <a href="index.html" class="button">Home</a>
+            <a href="products.html" class="button">Shop</a>
+            <a href="login.html" class="button" id="login-button">Login</a>
+            <a href="cart.html" class="button" id="cart-button">View Cart (0)</a>
+        </div>
+    </header>
+    <main>
+        <div class="center-content">
+            <div class="login-form">
+                <h2>Login</h2>
+                <form id="login-form" action="/login" method="POST">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    <br>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                    <br>
+                    <button type="button" id="login-submit" class="button">Login</button>
+                </form>
+            </div>
+            <div class="user-info" id="user-info">
+                <!-- Placeholder for the user's first name when authenticated -->
+            </div>
+            <button id="logout-button" class="button" style="display: none;">Logout</button>
+        </div>
+    </main>
+    <script>
+        // Function to update the login status in the menu
+        function updateLoginStatus() {
+            const loginButton = document.getElementById("login-button");
+            const logoutButton = document.getElementById("logout-button");
+            const userInfo = document.getElementById("user-info");
+
+            // Simulated authentication status
+            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"; // Replace with your JWT token
+
+            if (loginButton && logoutButton) {
+                if (token) {
+                    // Show user's first name
+                    loginButton.style.display = "none";
+                    //logoutButton.style.display = "inline-block";
+                    userInfo.textContent = ""; // Replace with actual user's first name
+                } else {
+                    // Show login button
+                    loginButton.style.display = "inline-block";
+                    logoutButton.style.display = "none";
+                    userInfo.textContent = ""; // Hide user's first name
+                }
+            }
+        }
+
+        // Update login status on page load
+        updateLoginStatus();
+
+        // Handle login button click
+        document.getElementById('login-submit').addEventListener('click', function () {
+            // Get the entered email and password
+            const enteredEmail = document.getElementById('email').value;
+            const enteredPassword = document.getElementById('password').value;
+
+            // Check if the email and password match the allowed values
+            if (enteredEmail === 'dj.jaff@gmail.com' && enteredPassword === 'abc123') {
+                // If the login is successful, redirect to the authenticated products page
+                window.location.href = 'Products_Auth.html'; // Redirect to the authenticated products page
+            } else {
+                // Display an error message for incorrect login
+                alert('Login failed. Please check your email and password.');
+            }
+        });
+    </script>
+</body>
+</html>
