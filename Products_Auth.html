@@ -37,23 +37,7 @@
         </div>
     </main>
     <script>
-        // Function to validate JWT token
-        function validateToken() {
-            // Simulated JWT token (replace with actual token)
-            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
-
-            // Validate the token (you may need to decode and verify on the server)
-            if (token) {
-                // Token is valid; allow access to authenticated content
-                return true;
-            } else {
-                // Token is not valid; redirect to login page
-                alert('Authentication failed. Please log in.');
-                window.location.href = 'login.html';
-                return false;
-            }
-        }
-
+       
         // Check if the user is authenticated
         const isAuthenticated = validateToken();
 
@@ -69,31 +53,100 @@
             }
         }
 
-        // Handle Add to Cart button clicks (only if authenticated)
-        if (isAuthenticated) {
-            document.querySelectorAll(".add-to-cart").forEach((button) => {
-                button.addEventListener("click", function () {
-                    const productId = this.getAttribute("data-product-id");
-                    const price = parseFloat(this.getAttribute("data-price"));
-                    const productName = this.getAttribute("data-product-name");
-
-                    if (productId && price) {
-                        // Add the product to the cart
-                        if (!cart[productId]) {
-                            cart[productId] = { name: productName, price, quantity: 1 };
-                        } else {
-                            cart[productId].quantity++;
-                        }
-                        localStorage.setItem("cart", JSON.stringify(cart));
-                        // Update the cart display
-                        updateCartDisplay();
-                    }
+        Document.addEventListener("DOMContentLoaded", function() {
+            const addToCartButtons = document.querySelectorAll(".add-to-cart-button");
+            const cartValueElement = document.querySelector(".cart-value");
+            const cartIcon = document.querySelector(".cart-icon");
+            let cartValue = 0;
+        
+         
+        
+            addToCartButtons.forEach(button => {
+                button.addEventListener("click", function() {
+                    const productName = this.getAttribute("data-product");
+                    const productPrice = parseFloat(this.getAttribute("data-price"));
+        
+         
+        
+                    
+                    cartValue += productPrice;
+                    cartValueElement.textContent = cartValue.toFixed(2);
+                    cartIcon.textContent = "🛒";
+        
+         
+        
+                    
+                    alert(`${productName} added to cart. Price: $${productPrice}`);
+        
+         
+        
+                    updateLPTag(cartValue);
                 });
             });
-        }
-
-        // Update cart display on page load
-        updateCartDisplay();
+        
+         
+        
+            const logoutButton = document.getElementById("logout");
+            logoutButton.addEventListener("click", function() {
+                window.location.href = "login.html";
+            });
+        
+         
+        
+            // Function to update LP tag with the new cart value
+            function updateLPTag(cartValue) {
+                const title = document.title;
+                const x = cartValue.toFixed(2); // Format cartValue as a number with 2 decimal places
+        
+         
+        
+                lpTag.sdes = lpTag.sdes || [];
+                lpTag.sdes.push({
+                    "type": "cart",
+                    "total": x, // Set the total to the formatted cartValue
+                    "currency": "USD",
+                    "numItems": x, // Assuming numItems should also be the formatted cartValue
+                    "products": [{
+                        "product": {
+                            "name": "Page Title: " + title,
+                            "category": ""
+                        },
+                    }]
+                });
+            }
+        
+         
+        
+            const identityFn = function(callback) {
+                callback({
+        "sub": "Mohammed Jaffer Islam - 910779",
+         "iss": "https://jwt.io/",
+         "aud": "acc:qa57221676",
+         "exp": 1992025992,
+         "iat": 1682030954,
+         "acr": "loa1"
+         });
+            };
+        
+         
+        
+            var id_token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJNb2hhbW1lZCBKYWZmZXIgSXNsYW0gLSA5MTA3NzkiLCJpc3MiOiJodHRwczovL2p3dC5pby8iLCJhdWQiOiJhY2M6cWE1NzIyMTY3NiIsImV4cCI6MTk5MjAyNTk5MiwiaWF0IjoxNjgyMDMwOTU0LCJhY3IiOiJsb2ExIn0.L1B2r_KuK7AN9XmvxyXUuNTZQS1JQXGQH169jxkkRWGLpp1GwgEInkxyaueN7FAXNtNugPrfbAqyW_F2qoXGxSGirTTnk_p8g9r9PDteP-JA7eq4qxEgbtrBnSTVFA8kmY7E9GPahHnabRDt-89w6Oi3rmzs1k5CP8HkKhwadTKEAgZ8t6X2vsr1-mWi9txTjwNMjTOo9EVxgr7z31q0Kxn-XTf3zxRalQWHNS8lA00f3v7CafXl6TeXCj4Ck69LakJAu5uGW5PcVvjq4jDsqw5Siw2A1UnM3xfQ8I6iz1_IADjPWVHVcFf0IPMuZsRZ1A5rFII79VUP3ujdsv3_BA";
+        
+         
+        
+            lpTag.identities.push(identityFn);
+        
+         
+        
+            function lpGetAuthenticationToken(callback) {
+                console.log("LP asked for id_token or auth code in Code Flow");
+                // Do your magic…
+                // On Success
+                callback(id_token);
+                // On Failure
+                callback("", "error reason");
+            }
+        });
     </script>
 </body>
 </html>
