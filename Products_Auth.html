@@ -4,7 +4,74 @@
     <title>Authenticated Products - LP Brand Store</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
     <!-- BEGIN LivePerson Monitor. -->
-    <script type="text/javascript">window.lpTag=window.lpTag||{},'undefined'==typeof window.lpTag._tagCount?(window.lpTag={wl:lpTag.wl||null,scp:lpTag.scp||null,site:'84851429'||'',section:lpTag.section||'',tagletSection:lpTag.tagletSection||null,autoStart:lpTag.autoStart!==!1,ovr:lpTag.ovr||{},_v:'1.10.0',_tagCount:1,protocol:'https:',events:{bind:function(t,e,i){lpTag.defer(function(){lpTag.events.bind(t,e,i)},0)},trigger:function(t,e,i){lpTag.defer(function(){lpTag.events.trigger(t,e,i)},1)}},defer:function(t,e){0===e?(this._defB=this._defB||[],this._defB.push(t)):1===e?(this._defT=this._defT||[],this._defT.push(t)):(this._defL=this._defL||[],this._defL.push(t))},load:function(t,e,i){var n=this;setTimeout(function(){n._load(t,e,i)},0)},_load:function(t,e,i){var n=t;t||(n=this.protocol+'//'+(this.ovr&&this.ovr.domain?this.ovr.domain:'lptag.liveperson.net')+'/tag/tag.js?site='+this.site);var o=document.createElement('script');o.setAttribute('charset',e?e:'UTF-8'),i&&o.setAttribute('id',i),o.setAttribute('src',n),document.getElementsByTagName('head').item(0).appendChild(o)},init:function(){this._timing=this._timing||{},this._timing.start=(new Date).getTime();var t=this;window.attachEvent?window.attachEvent('onload',function(){t._domReady('domReady')}):(window.addEventListener('DOMContentLoaded',function(){t._domReady('contReady')},!1),window.addEventListener('load',function(){t._domReady('domReady')},!1)),'undefined'===typeof window._lptStop&&this.load()},start:function(){this.autoStart=!0},_domReady:function(t){this.isDom||(this.isDom=!0,this.events.trigger('LPT','DOM_READY',{t:t})),this._timing[t]=(new Date).getTime()},vars:lpTag.vars||[],dbs:lpTag.dbs||[],ctn:lpTag.ctn||[],sdes:lpTag.sdes||[],hooks:lpTag.hooks||[],identities:lpTag.identities||[],ev:lpTag.ev||[]},lpTag.init()):window.lpTag._tagCount+=1;</script>
+    <script type="text/javascript">
+        // Define the validateToken function to check if the user is authenticated
+        function validateToken() {
+            // Simulated logic to check if the user is authenticated
+            const token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJNb2hhbW1lZCBKYWZmZXIgSXNsYW0gLSA5MTA3NzkiLCJpc3MiOiJodHRwczovL2p3dC5pby8iLCJhdWQiOiJhY2M6cWE1NzIyMTY3NiIsImV4cCI6MTk5MjAyNTk5MiwiaWF0IjoxNjgyMDMwOTU0LCJhY3IiOiJsb2ExIn0.L1B2r_KuK7AN9XmvxyXUuNTZQS1JQXGQH169jxkkRWGLpp1GwgEInkxyaueN7FAXNtNugPrfbAqyW_F2qoXGxSGirTTnk_p8g9r9PDteP-JA7eq4qxEgbtrBnSTVFA8kmY7E9GPahHnabRDt-89w6Oi3rmzs1k5CP8HkKhwadTKEAgZ8t6X2vsr1-mWi9txTjwNMjTOo9EVxgr7z31q0Kxn-XTf3zxRalQWHNS8lA00f3v7CafXl6TeXCj4Ck69LakJAu5uGW5PcVvjq4jDsqw5Siw2A1UnM3xfQ8I6iz1_IADjPWVHVcFf0IPMuZsRZ1A5rFII79VUP3ujdsv3_BA";
+            
+            // Check if the token is valid (you should implement your own logic here)
+            if (token) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        // Function to update LP tag with cart information
+        function updateLPTag(cartValue) {
+            const title = document.title;
+            const x = cartValue.toFixed(2); // Format cartValue as a number with 2 decimal places
+
+            lpTag.sdes = lpTag.sdes || [];
+            lpTag.sdes.push({
+                "type": "cart",
+                "total": x, // Set the total to the formatted cartValue
+                "currency": "USD",
+                "numItems": x, // Assuming numItems should also be the formatted cartValue
+                "products": [{
+                    "product": {
+                        "name": "Page Title: " + title,
+                        "category": ""
+                    },
+                }]
+            });
+        }
+    
+     
+    
+        const identityFn = function(callback) {
+            callback({
+    "sub": "Mohammed Jaffer Islam - 910779",
+     "iss": "https://jwt.io/",
+     "aud": "acc:qa57221676",
+     "exp": 1992025992,
+     "iat": 1682030954,
+     "acr": "loa1"
+     });
+        };
+    
+     
+    
+        var id_token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJNb2hhbW1lZCBKYWZmZXIgSXNsYW0gLSA5MTA3NzkiLCJpc3MiOiJodHRwczovL2p3dC5pby8iLCJhdWQiOiJhY2M6cWE1NzIyMTY3NiIsImV4cCI6MTk5MjAyNTk5MiwiaWF0IjoxNjgyMDMwOTU0LCJhY3IiOiJsb2ExIn0.L1B2r_KuK7AN9XmvxyXUuNTZQS1JQXGQH169jxkkRWGLpp1GwgEInkxyaueN7FAXNtNugPrfbAqyW_F2qoXGxSGirTTnk_p8g9r9PDteP-JA7eq4qxEgbtrBnSTVFA8kmY7E9GPahHnabRDt-89w6Oi3rmzs1k5CP8HkKhwadTKEAgZ8t6X2vsr1-mWi9txTjwNMjTOo9EVxgr7z31q0Kxn-XTf3zxRalQWHNS8lA00f3v7CafXl6TeXCj4Ck69LakJAu5uGW5PcVvjq4jDsqw5Siw2A1UnM3xfQ8I6iz1_IADjPWVHVcFf0IPMuZsRZ1A5rFII79VUP3ujdsv3_BA";
+    
+     
+    
+        lpTag.identities.push(identityFn);
+    
+     
+    
+        function lpGetAuthenticationToken(callback) {
+            console.log("LP asked for id_token or auth code in Code Flow");
+            // Do your magic…
+            // On Success
+            callback(id_token);
+            // On Failure
+            callback("", "error reason");
+        }
+
+        // ... (the rest of your LP code)
+    </script>
     <!-- END LivePerson Monitor. -->
 </head>
 <body>
@@ -37,7 +104,6 @@
         </div>
     </main>
     <script>
-       
         // Check if the user is authenticated
         const isAuthenticated = validateToken();
 
@@ -58,94 +124,26 @@
             const cartValueElement = document.querySelector(".cart-value");
             const cartIcon = document.querySelector(".cart-icon");
             let cartValue = 0;
-        
-         
-        
+
             addToCartButtons.forEach(button => {
                 button.addEventListener("click", function() {
                     const productName = this.getAttribute("data-product");
                     const productPrice = parseFloat(this.getAttribute("data-price"));
-        
-         
-        
-                    
+
                     cartValue += productPrice;
                     cartValueElement.textContent = cartValue.toFixed(2);
                     cartIcon.textContent = "🛒";
-        
-         
-        
-                    
+
                     alert(`${productName} added to cart. Price: $${productPrice}`);
-        
-         
-        
+
                     updateLPTag(cartValue);
                 });
             });
-        
-         
-        
+
             const logoutButton = document.getElementById("logout");
             logoutButton.addEventListener("click", function() {
                 window.location.href = "login.html";
             });
-        
-         
-        
-            // Function to update LP tag with the new cart value
-            function updateLPTag(cartValue) {
-                const title = document.title;
-                const x = cartValue.toFixed(2); // Format cartValue as a number with 2 decimal places
-        
-         
-        
-                lpTag.sdes = lpTag.sdes || [];
-                lpTag.sdes.push({
-                    "type": "cart",
-                    "total": x, // Set the total to the formatted cartValue
-                    "currency": "USD",
-                    "numItems": x, // Assuming numItems should also be the formatted cartValue
-                    "products": [{
-                        "product": {
-                            "name": "Page Title: " + title,
-                            "category": ""
-                        },
-                    }]
-                });
-            }
-        
-         
-        
-            const identityFn = function(callback) {
-                callback({
-        "sub": "Mohammed Jaffer Islam - 910779",
-         "iss": "https://jwt.io/",
-         "aud": "acc:qa57221676",
-         "exp": 1992025992,
-         "iat": 1682030954,
-         "acr": "loa1"
-         });
-            };
-        
-         
-        
-            var id_token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJNb2hhbW1lZCBKYWZmZXIgSXNsYW0gLSA5MTA3NzkiLCJpc3MiOiJodHRwczovL2p3dC5pby8iLCJhdWQiOiJhY2M6cWE1NzIyMTY3NiIsImV4cCI6MTk5MjAyNTk5MiwiaWF0IjoxNjgyMDMwOTU0LCJhY3IiOiJsb2ExIn0.L1B2r_KuK7AN9XmvxyXUuNTZQS1JQXGQH169jxkkRWGLpp1GwgEInkxyaueN7FAXNtNugPrfbAqyW_F2qoXGxSGirTTnk_p8g9r9PDteP-JA7eq4qxEgbtrBnSTVFA8kmY7E9GPahHnabRDt-89w6Oi3rmzs1k5CP8HkKhwadTKEAgZ8t6X2vsr1-mWi9txTjwNMjTOo9EVxgr7z31q0Kxn-XTf3zxRalQWHNS8lA00f3v7CafXl6TeXCj4Ck69LakJAu5uGW5PcVvjq4jDsqw5Siw2A1UnM3xfQ8I6iz1_IADjPWVHVcFf0IPMuZsRZ1A5rFII79VUP3ujdsv3_BA";
-        
-         
-        
-            lpTag.identities.push(identityFn);
-        
-         
-        
-            function lpGetAuthenticationToken(callback) {
-                console.log("LP asked for id_token or auth code in Code Flow");
-                // Do your magic…
-                // On Success
-                callback(id_token);
-                // On Failure
-                callback("", "error reason");
-            }
         });
     </script>
 </body>
